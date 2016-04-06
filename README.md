@@ -1,8 +1,8 @@
 # ContactsList
 This is the third project of the semester. Here are the requirements:
 
-You will create a list of contacts that have been added to the device.
-  This list should display first and last name or a business name.
+You will create a list of contacts that have been added to the device.</br>
+&#09;This list should display first and last name or a business name.</br>
   List should display a photo taken or have a placeholder where a photo should be.
 There should be a feature to “Add a new contact” that will open a new view to add a contact to.
 There should be a feature to View and Edit a contact.
