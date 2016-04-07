@@ -26,8 +26,17 @@ public class ContactListViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.contact_list_recycler_view, container, false);
         mContactRecyclerView = (RecyclerView) view.findViewById(R.id.contact_listing_recycler_view);
         mContactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        updateUI();
         return view;
     }
+
+    private void updateUI() {
+        ContactModel contactModel = ContactModel.get(getActivity());
+        List<Contact> contacts = contactModel.getContacts();
+        mContactAdapter = new ContactAdapter(contacts);
+        mContactRecyclerView.setAdapter(mContactAdapter);
+    }
+
 
     private class ContactHolder extends RecyclerView.ViewHolder {
         private TextView mFirstNameTextView;
@@ -66,11 +75,12 @@ public class ContactListViewFragment extends Fragment {
         @Override
         public void onBindViewHolder(ContactHolder holder, int position) {
             Contact contact = mContacts.get(position);
+            holder.bindContact(contact);
         }
 
         @Override
         public int getItemCount() {
-            return 10;
+            return mContacts.size();
         }
     }
 }

@@ -1,9 +1,12 @@
 package edu.umsl.bekvff.contactslist;
 
+import java.util.UUID;
+
 /**
  * Created by b-kizzle on 4/5/16.
  */
 public class Contact {
+    private UUID mId;
     private String mFirstName;
     private String mLastName;
     private String mEmailAddress;
@@ -52,5 +55,13 @@ public class Contact {
 
     public void setImageUrl(int imageUrl) {
         mImageUrl = imageUrl;
+    }
+
+    public UUID getId() {
+        return mId;
+    }
+
+    public void setId(UUID id) {
+        mId = id;
     }
 }
