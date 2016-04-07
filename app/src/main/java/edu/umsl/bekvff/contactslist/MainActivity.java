@@ -1,36 +1,12 @@
 package edu.umsl.bekvff.contactslist;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
+import android.support.v4.app.Fragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SingleFragmentActivity {
 
-    private ImageButton mCreateContactButton;
-    private ContactListViewFragment mContactListViewFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        mCreateContactButton = (ImageButton) findViewById(R.id.create_contact_button);
-
-        FragmentManager manager = getSupportFragmentManager();
-
-        mContactListViewFragment = (ContactListViewFragment) manager.findFragmentById(R.id.frame_for_recycle_view);
-        if(mContactListViewFragment == null) {
-            mContactListViewFragment = new ContactListViewFragment();
-            manager.beginTransaction()
-                    .add(R.id.frame_for_recycle_view, mContactListViewFragment)
-                    .commit();
-        }
-    }
-
-
-    public void createContactButtonClicked(View v) {
-
+    protected Fragment createFragment() {
+        return new ContactListViewFragment();
     }
 }

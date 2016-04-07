@@ -4,44 +4,44 @@ package edu.umsl.bekvff.contactslist;
  * Created by b-kizzle on 4/5/16.
  */
 public class Contact {
-    private String firstName;
-    private String lastName;
-    private String emailAddress;
-    private String businessName;
+    private String mFirstName;
+    private String mLastName;
+    private String mEmailAddress;
+    private String mBusinessName;
 
     public Contact() {
 
     }
 
     public String getFirstName() {
-        return firstName;
+        return mFirstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        mFirstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return mLastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        mLastName = lastName;
     }
 
     public String getEmailAddress() {
-        return emailAddress;
+        return mEmailAddress;
     }
 
     public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+        mEmailAddress = emailAddress;
     }
 
     public String getBusinessName() {
-        return businessName;
+        return mBusinessName;
     }
 
     public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+        mBusinessName = businessName;
     }
 }
