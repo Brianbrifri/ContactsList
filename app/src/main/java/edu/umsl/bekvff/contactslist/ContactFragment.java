@@ -1,7 +1,10 @@
 package edu.umsl.bekvff.contactslist;
 
 import android.content.Intent;
+import android.graphics.Camera;
+import android.hardware.camera2.CameraCaptureSession;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -48,6 +51,8 @@ public class ContactFragment extends Fragment{
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
+
+
         mFirstNameField = (EditText) view.findViewById(R.id.contact_first_name);
         mLastNameField = (EditText) view.findViewById(R.id.contact_last_name);
         mEmailAddressField = (EditText) view.findViewById(R.id.contact_email_address);
@@ -127,8 +132,8 @@ public class ContactFragment extends Fragment{
         mContactImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CAMERA_BUTTON);
-
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 1);
             }
         });
 
