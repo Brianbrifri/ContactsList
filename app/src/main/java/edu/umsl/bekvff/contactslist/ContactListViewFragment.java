@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
+
 import java.util.List;
 
 /**
@@ -35,6 +37,7 @@ public class ContactListViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.contact_list_recycler_view, container, false);
         mContactRecyclerView = (RecyclerView) view.findViewById(R.id.contact_listing_recycler_view);
         mContactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mContactRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
         updateUI();
         Log.d("TAG", "On create called for list fragment");
         return view;
