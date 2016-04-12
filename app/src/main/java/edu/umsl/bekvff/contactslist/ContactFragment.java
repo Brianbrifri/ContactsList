@@ -41,7 +41,7 @@ public class ContactFragment extends Fragment{
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID contactId = (UUID) getArguments().getSerializable(ARG_CONTACT_ID);
         mContact = ContactModel.get(getActivity()).getContact(contactId);

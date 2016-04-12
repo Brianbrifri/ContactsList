@@ -73,7 +73,7 @@ public class ContactListViewFragment extends Fragment {
             case R.id.menu_item_new_contact:
                 Contact contact = new Contact();
                 ContactModel.get(getActivity()).addContact(contact);
-                Intent intent = MainActivity.newIntent(getActivity(), contact.getId());
+                Intent intent = ContactPagerActivity.newIntent(getActivity(), contact.getId());
                 startActivity(intent);
                 return true;
             default:
