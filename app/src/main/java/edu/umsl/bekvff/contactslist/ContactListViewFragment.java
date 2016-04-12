@@ -1,11 +1,15 @@
 package edu.umsl.bekvff.contactslist;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,41 +24,89 @@ public class ContactListViewFragment extends Fragment {
     private RecyclerView mContactRecyclerView;
     private ContactAdapter mContactAdapter;
 
-    @Nullable
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.contact_list_recycler_view, container, false);
         mContactRecyclerView = (RecyclerView) view.findViewById(R.id.contact_listing_recycler_view);
         mContactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
+        Log.d("TAG", "On create called for list fragment");
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
     }
 
     private void updateUI() {
         ContactModel contactModel = ContactModel.get(getActivity());
         List<Contact> contacts = contactModel.getContacts();
-        mContactAdapter = new ContactAdapter(contacts);
-        mContactRecyclerView.setAdapter(mContactAdapter);
+
+        if(mContactAdapter == null) {
+            mContactAdapter = new ContactAdapter(contacts);
+            mContactRecyclerView.setAdapter(mContactAdapter);
+        }
+        else {
+            mContactAdapter.setContacts(contacts);
+            mContactAdapter.notifyDataSetChanged();
+        }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_contact_list, menu);
 
-    private class ContactHolder extends RecyclerView.ViewHolder {
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_new_contact:
+                Contact contact = new Contact();
+                ContactModel.get(getActivity()).addContact(contact);
+                Intent intent = MainActivity.newIntent(getActivity(), contact.getId());
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class ContactHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mFirstNameTextView;
         private TextView mLastNameTextView;
         private TextView mBusinessNameTextView;
         private ImageView mContactImageView;
+        private Contact mContact;
 
         public ContactHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             mFirstNameTextView = (TextView) itemView.findViewById(R.id.list_item_first_name_view);
             mLastNameTextView = (TextView) itemView.findViewById(R.id.list_item_last_name_view);
             mContactImageView = (ImageView) itemView.findViewById(R.id.list_item_contact_image_view);
         }
 
         public void bindContact(Contact contact) {
-            mFirstNameTextView.setText(contact.getFirstName());
-            mLastNameTextView.setText(contact.getLastName());
-            mContactImageView.setImageResource(contact.getImageUrl());
+            mContact = contact;
+            mFirstNameTextView.setText(mContact.getFirstName());
+            mLastNameTextView.setText(mContact.getLastName());
+            mContactImageView.setImageResource(mContact.getImageUrl());
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = MainActivity.newIntent(getActivity(), mContact.getId());
+            startActivity(intent);
         }
     }
 
@@ -81,6 +133,10 @@ public class ContactListViewFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mContacts.size();
+        }
+
+        public void setContacts(List<Contact> contacts) {
+            mContacts = contacts;
         }
     }
 }

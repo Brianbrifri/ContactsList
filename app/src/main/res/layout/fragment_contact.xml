@@ -38,7 +38,19 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:hint="@string/last_name_hint"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/business_name"
+        style="?android:listSeparatorTextViewStyle"/>
 
+    <EditText
+        android:id="@+id/contact_business_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="@string/business_name_hint"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,17 +66,5 @@
         android:layout_marginRight="16dp"
         android:hint="@string/email_address_hint"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/business_name"
-        style="?android:listSeparatorTextViewStyle"/>
 
-    <EditText
-        android:id="@+id/contact_business_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="@string/business_name_hint"/>
 </LinearLayout>

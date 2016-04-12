@@ -14,8 +14,13 @@ public class Contact {
     private int mImageUrl;
 
     public Contact() {
-
+        this(UUID.randomUUID());
     }
+
+    public Contact(UUID id) {
+        mId = id;
+    }
+
 
     public String getFirstName() {
         return mFirstName;

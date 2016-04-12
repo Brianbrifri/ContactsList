@@ -8,4 +8,5 @@
     <string name="last_name_hint">Enter the Last Name of the Contact</string>
     <string name="business_name_hint">Enter the name of the Business</string>
     <string name="email_address_hint">example@domain.com</string>
+    <string name="new_contact">New Contact</string>
 </resources>
