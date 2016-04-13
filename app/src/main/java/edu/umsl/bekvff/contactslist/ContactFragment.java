@@ -139,4 +139,10 @@ public class ContactFragment extends Fragment{
 
         return view;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ContactModel.get(getActivity()).updateContact(mContact);
+    }
 }

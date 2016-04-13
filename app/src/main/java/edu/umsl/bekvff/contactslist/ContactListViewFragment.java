@@ -108,7 +108,7 @@ public class ContactListViewFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = MainActivity.newIntent(getActivity(), mContact.getId());
+            Intent intent = ContactPagerActivity.newIntent(getActivity(), mContact.getId());
             startActivity(intent);
         }
     }
