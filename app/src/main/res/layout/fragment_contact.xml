@@ -66,5 +66,14 @@
         android:layout_marginRight="16dp"
         android:hint="@string/email_address_hint"/>
 
+    <ImageView
+        android:id="@+id/send_message_button"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/message_icon"
+        android:layout_gravity="center"
+         />
+
 
 </LinearLayout>

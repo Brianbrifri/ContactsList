@@ -23,6 +23,8 @@ import java.util.UUID;
 public class ContactFragment extends Fragment{
 
     private static final String ARG_CONTACT_ID = "contact_id";
+    private static final int REQUEST_CAMERA = 1;
+    private static final int SEND_TO_CONTACT = 2;
 
     private Contact mContact;
     private EditText mFirstNameField;
@@ -30,6 +32,7 @@ public class ContactFragment extends Fragment{
     private EditText mEmailAddressField;
     private EditText mBusinessNameField;
     private ImageView mContactImage;
+    private ImageView mSendMessageImage;
 
     public static ContactFragment newInstance(UUID contactId) {
         Bundle args = new Bundle();
@@ -58,6 +61,8 @@ public class ContactFragment extends Fragment{
         mEmailAddressField = (EditText) view.findViewById(R.id.contact_email_address);
         mBusinessNameField = (EditText) view.findViewById(R.id.contact_business_name);
         mContactImage = (ImageView) view.findViewById(R.id.contact_image);
+        mSendMessageImage = (ImageView) view.findViewById(R.id.send_message_button);
+
 
         mFirstNameField.setText(mContact.getFirstName());
         mLastNameField.setText(mContact.getLastName());
@@ -133,7 +138,16 @@ public class ContactFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, REQUEST_CAMERA);
+            }
+        });
+
+        mSendMessageImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                startActivity(intent);
             }
         });
 
