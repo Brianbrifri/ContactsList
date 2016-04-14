@@ -1,8 +1,10 @@
 package edu.umsl.bekvff.contactslist;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -25,6 +28,7 @@ import java.util.List;
 public class ContactListViewFragment extends Fragment {
     private RecyclerView mContactRecyclerView;
     private ContactAdapter mContactAdapter;
+    private File mPhotoFile;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +107,17 @@ public class ContactListViewFragment extends Fragment {
             mContact = contact;
             mFirstNameTextView.setText(mContact.getFirstName());
             mLastNameTextView.setText(mContact.getLastName());
-            mContactImageView.setImageResource(mContact.getImageUrl());
+            updatePhotoView();
+        }
+
+        private void updatePhotoView() {
+            mPhotoFile = ContactModel.get(getActivity()).getPhotoFile(mContact);
+            if (mPhotoFile == null || !mPhotoFile.exists()) {
+                mContactImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.default_pic, null));
+            } else {
+                Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+                mContactImageView.setImageBitmap(bitmap);
+            }
         }
 
         @Override
@@ -141,5 +155,7 @@ public class ContactListViewFragment extends Fragment {
         public void setContacts(List<Contact> contacts) {
             mContacts = contacts;
         }
+
+
     }
 }

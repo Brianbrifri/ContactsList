@@ -69,4 +69,8 @@ public class Contact {
     public void setId(UUID id) {
         mId = id;
     }
+
+    public String getPhotoFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
+    }
 }

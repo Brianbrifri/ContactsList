@@ -1,12 +1,17 @@
 package edu.umsl.bekvff.contactslist;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.hardware.camera2.CameraCaptureSession;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.io.File;
 import java.util.UUID;
 
 /**
@@ -33,6 +39,7 @@ public class ContactFragment extends Fragment{
     private EditText mBusinessNameField;
     private ImageView mContactImage;
     private ImageView mSendMessageImage;
+    private File mPhotoFile;
 
     public static ContactFragment newInstance(UUID contactId) {
         Bundle args = new Bundle();
@@ -48,6 +55,8 @@ public class ContactFragment extends Fragment{
         super.onCreate(savedInstanceState);
         UUID contactId = (UUID) getArguments().getSerializable(ARG_CONTACT_ID);
         mContact = ContactModel.get(getActivity()).getContact(contactId);
+        mPhotoFile = ContactModel.get(getActivity()).getPhotoFile(mContact);
+
     }
 
     @Nullable
@@ -68,7 +77,6 @@ public class ContactFragment extends Fragment{
         mLastNameField.setText(mContact.getLastName());
         mEmailAddressField.setText(mContact.getEmailAddress());
         mBusinessNameField.setText(mContact.getBusinessName());
-        mContactImage.setImageResource(R.drawable.default_pic);
 
         mFirstNameField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -134,11 +142,18 @@ public class ContactFragment extends Fragment{
 
             }
         });
+
+        PackageManager packageManager = getActivity().getPackageManager();
+        final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        boolean canTakePhoto = mPhotoFile != null && captureImage.resolveActivity(packageManager) != null;
+        if (canTakePhoto) {
+            Uri uri = Uri.fromFile(mPhotoFile);
+            captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        }
         mContactImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, REQUEST_CAMERA);
+                startActivityForResult(captureImage, REQUEST_CAMERA);
             }
         });
 
@@ -151,6 +166,7 @@ public class ContactFragment extends Fragment{
             }
         });
 
+        updatePhotoView();
         return view;
     }
 
@@ -158,5 +174,26 @@ public class ContactFragment extends Fragment{
     public void onPause() {
         super.onPause();
         ContactModel.get(getActivity()).updateContact(mContact);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_CAMERA) {
+            updatePhotoView();
+        }
+
+    }
+
+    private void updatePhotoView() {
+        if (mPhotoFile == null || !mPhotoFile.exists()) {
+            mContactImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.default_pic, null));
+        } else {
+            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+            mContactImage.setImageBitmap(bitmap);
+        }
     }
 }
