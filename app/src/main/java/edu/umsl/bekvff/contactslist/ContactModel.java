@@ -19,7 +19,7 @@ import edu.umsl.bekvff.contactslist.database.ContactDbSchema.ContactTable;
  * Created by Brian Koehler on 4/6/2016.
  */
 public class ContactModel {
-    public static ContactModel sContactModel;
+    private static ContactModel sContactModel;
     private List<Contact> mContacts;
     private Context mContext;
     private SQLiteDatabase mDatabase;

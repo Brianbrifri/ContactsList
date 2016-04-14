@@ -11,7 +11,6 @@ public class Contact {
     private String mLastName;
     private String mEmailAddress;
     private String mBusinessName;
-    private int mImageUrl;
 
     public Contact() {
         this(UUID.randomUUID());
@@ -52,14 +51,6 @@ public class Contact {
 
     public void setBusinessName(String businessName) {
         mBusinessName = businessName;
-    }
-
-    public int getImageUrl() {
-        return mImageUrl;
-    }
-
-    public void setImageUrl(int imageUrl) {
-        mImageUrl = imageUrl;
     }
 
     public UUID getId() {
