@@ -16,6 +16,8 @@ import java.util.UUID;
 /**
  * Created by Brian Koehler on 4/11/2016.
  */
+//This activity holds the contacts as they are being created/edited. This allows the user to swipe
+    //left and right to get to previous/next contacts
 public class ContactPagerActivity extends AppCompatActivity{
     private static final String EXTRA_CRIME_ID = "edu.umsl.bekvff.contactlist.contact_id";
     private ViewPager mViewPager;

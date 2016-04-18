@@ -24,11 +24,16 @@ import java.util.UUID;
 /**
  * Created by Brian Koehler on 4/6/2016.
  */
+
+//Contact fragment, has text change listeners in the edit text fields to update the contact info
+    //clicking on the photo icon launches the camera to take a picture and replace the default contact
+    //picture. Clicking on the message icon shows a list of apps available to send an email to the email
+    //address of the contact you are in. The database gets updated when this fragment is paused, ie put into
+    //background by pressing the back button
 public class ContactFragment extends Fragment{
 
     private static final String ARG_CONTACT_ID = "contact_id";
     private static final int REQUEST_CAMERA = 1;
-    private static final int SEND_TO_CONTACT = 2;
 
     private Contact mContact;
     private EditText mFirstNameField;
@@ -158,9 +163,12 @@ public class ContactFragment extends Fragment{
         mSendMessageImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                startActivity(intent);
+                StringBuilder builder = new StringBuilder("mailto:").append(mContact.getEmailAddress());
+                String mailId = builder.toString();
+                Uri uri = Uri.parse(mailId);
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(uri);
+                startActivity(Intent.createChooser(intent, "Send Email"));
             }
         });
 

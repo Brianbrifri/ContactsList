@@ -9,6 +9,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ContactListViewFragment mContactListViewFragment;
 
+    //Main activity that holds the listViewFragment
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

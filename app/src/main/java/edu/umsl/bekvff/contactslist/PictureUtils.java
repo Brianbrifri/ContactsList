@@ -8,6 +8,7 @@ import android.graphics.Point;
 /**
  * Created by b-kizzle on 4/13/16.
  */
+//Picture Utils Class taken from in class work to handle scaling of the bitmap for the profile picture
 public class PictureUtils {
     public static Bitmap getScaledBitmap(String path, int destWidth, int destHeight) {
         BitmapFactory.Options options = new BitmapFactory.Options();

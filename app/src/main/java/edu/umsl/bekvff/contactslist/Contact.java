@@ -5,6 +5,7 @@ import java.util.UUID;
 /**
  * Created by b-kizzle on 4/5/16.
  */
+//Simple contact class object
 public class Contact {
     private UUID mId;
     private String mFirstName;

@@ -18,12 +18,15 @@ import edu.umsl.bekvff.contactslist.database.ContactDbSchema.ContactTable;
 /**
  * Created by Brian Koehler on 4/6/2016.
  */
+//This is the model. It passes around a static instance of it since the data is stored in the database in the file system
+
 public class ContactModel {
     private static ContactModel sContactModel;
     private List<Contact> mContacts;
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
+    //Returns contact model
     public static ContactModel get(Context context) {
         if(sContactModel == null) {
             sContactModel = new ContactModel(context);
@@ -31,11 +34,13 @@ public class ContactModel {
         return sContactModel;
     }
 
+    //Constructor
     private ContactModel(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new ContactBaseHelper(mContext).getWritableDatabase();
     }
 
+    //Gets all the info about a contact and puts them in a content value
     private static ContentValues getContentValues(Contact contact) {
         ContentValues values = new ContentValues();
         values.put(ContactTable.Cols.UUID, contact.getId().toString());
@@ -46,6 +51,7 @@ public class ContactModel {
         return values;
     }
 
+    //Updates the database with latest info from the contact
     public void updateContact(Contact contact) {
         String uuidString = contact.getId().toString();
         ContentValues values = getContentValues(contact);
@@ -82,12 +88,14 @@ public class ContactModel {
         return contacts;
     }
 
+    //Creates a contact
     public void addContact(Contact contact) {
         ContentValues values = getContentValues(contact);
         mDatabase.insert(ContactTable.NAME, null, values);
     }
 
 
+    //Gets a specific contact
     public Contact getContact(UUID contactId) {
         ContactCursorWrapper cursor = queryContacts(
                 ContactTable.Cols.UUID + " = ?",
@@ -106,6 +114,7 @@ public class ContactModel {
         }
     }
 
+    //Gets the photo of for a contact
     public File getPhotoFile(Contact contact) {
         File externalFilesDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         if (externalFilesDir == null) {

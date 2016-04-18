@@ -25,6 +25,8 @@ import java.util.List;
 /**
  * Created by b-kizzle on 4/5/16.
  */
+//Simple recycler view that shows the contact picture and First/Last name of contact. Clicking on contact
+    //takes you to pager activity. Also implements a menu option at the top of the fragment to create a new contact
 public class ContactListViewFragment extends Fragment {
     private RecyclerView mContactRecyclerView;
     private ContactAdapter mContactAdapter;
@@ -91,7 +93,6 @@ public class ContactListViewFragment extends Fragment {
     private class ContactHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mFirstNameTextView;
         private TextView mLastNameTextView;
-        private TextView mBusinessNameTextView;
         private ImageView mContactImageView;
         private Contact mContact;
 
